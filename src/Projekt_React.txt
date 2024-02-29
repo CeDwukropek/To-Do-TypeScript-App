@@ -1,0 +1,13 @@
+Cel Projektu:
+Stworzenie aplikacji internetowej z wykorzystaniem Reacta, która spełni poniższe wymagania:
+Komponenty (co najmniej jeden)
+useState i useEffect 
+Pobieranie danych z Api i wyświetlanie ich (* jeśli dane na to pozwolą to można dodać jakieś statystyki, np. średnia)
+routing (przechodzenie między stronami)
+co najmniej jeden customowy hook
+css (przynajmniej jakaś podstawowa responsywność)
+jeśli spasuje do projektu to react-hook-form (* opcjonalne, dobrze gdyby było)
+dobrze by było gdyby to było oparte na* TypeScript, zamiast na JavaScript
+Dokumentacja w której zawarte będą informacje: na jaki temat jest projekt, do czego służy, opisy (mogą być krótkie) co znajdziemy na jakiej stronie i jak działają komponenty na nich, dobrze by było gdyby były screeny działania strony (gdyby coś u mnie nie działało a żeby dobre oceny wystawić) oraz będzie krótkie przedstawienie projektu na lekcji by sprawdzić czy rzeczywiście te rzeczy działają
+Temat dowolny, byle by mógł mieć realne zastosowanie
+Rzeczy z gwiązdką nie są wymagane, ale pozwolą zwiększyć ocenę (nawet na 6)

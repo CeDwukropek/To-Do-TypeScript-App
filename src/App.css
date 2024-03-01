@@ -19,6 +19,8 @@ body {
   color: var(--text);
   position: relative;
   overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 .fullFlex {

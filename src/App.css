@@ -49,6 +49,11 @@ body {
   .navbar {
     padding: 1.5rem;
   }
+
+  .tasksContainer {
+    grid-template-columns: 1fr;
+  }
+
 }
 
 .tasksContainer {

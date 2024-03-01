@@ -43,7 +43,8 @@ body {
   margin-top: 2.5rem;
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(250px, min-content));
   gap: 1.5rem;
   padding: 0 200px;
 }
@@ -250,7 +251,9 @@ body .shadow {
   .navbar {
     padding: 1.5rem;
   }
+}
 
+@media only screen and (max-width: 500px) {
   .tasksContainer {
     grid-template-columns: 1fr;
   }

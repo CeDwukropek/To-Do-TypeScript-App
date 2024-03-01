@@ -37,25 +37,6 @@ body {
   padding: 0 10%;
 }
 
-@media only screen and (max-width: 800px) {
-  .bodyContainer {
-    padding: 0 1.5rem;
-  }
-
-  .tasksContainer {
-    justify-content: center;
-  }
-
-  .navbar {
-    padding: 1.5rem;
-  }
-
-  .tasksContainer {
-    grid-template-columns: 1fr;
-  }
-
-}
-
 .tasksContainer {
   margin-top: 2.5rem;
   display: grid;
@@ -253,4 +234,22 @@ body .shadow {
 
 .task p {
   margin-top: 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .bodyContainer {
+    padding: 0 1.5rem;
+  }
+
+  .tasksContainer {
+    justify-content: center;
+  }
+
+  .navbar {
+    padding: 1.5rem;
+  }
+
+  .tasksContainer {
+    grid-template-columns: 1fr;
+  }
 }

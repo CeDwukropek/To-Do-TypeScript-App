@@ -33,7 +33,7 @@ export const Main = () => {
 
   useEffect(() => {
       getTasks()
-  }, [getTasks])
+  }, [])
 
 
   return(

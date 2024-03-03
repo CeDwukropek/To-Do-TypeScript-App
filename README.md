@@ -1,46 +1,215 @@
-# Getting Started with Create React App
+# To-Do-TypeScript-App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projekt w pełni działającej aplikacji z zadaniami do zrobienia. Dane przechowywane są na [Firebase](https://firebase.google.com) a cała aplikacja hostowana jest na [Vercelu](https://vercel.com). Link do aplikacji: [To-Do-TypeScript-App](https://to-do-app-chi-eosin.vercel.app)
 
-## Available Scripts
+## Działanie
 
-In the project directory, you can run:
+Cała aplikacja zbudowana jest w technologii SSR(Server Side Rendering) z użyciem TypeScript'a. Każdy użytkownik ma swoje karteczki, po zalogowaniu się z użyciem konta google. Wszystkie karteczki można zakończyć lub usunąć.
 
-### `npm start`
+## Komponenty
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Login.tsx
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+plik **Login.tsx** zawiera system logowania.
 
-### `npm test`
+#### opis 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+useEffect(() => {
+    if(user) {
+      //console.log("logged")
+      navigate('/Main')
+    }
+}, [user, navigate])
+```
 
-### `npm run build`
+Ma za zadanie sprawdzać czy użytkownik nie jest już zalogowany do aplikacji. ```if(user)``` sprawdza czy istnieje już zalogowany użytkownik. Jeśli istnieje przenosi go do strony głównej. Argumenty ```[user, navigate]``` mają za zadanie użyć hooka przy każdym ręcznym odświeżeniu strony.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+    .then(() => navigate('/Main'))
+    .catch((error) => {
+      const errorMessage = error.message;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+      console.log(errorMessage)
+    });
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Jest funkcją otwierającą popup z logowaniem. Jeśli logowanie powiedzie się, przenosi użytkownika do strony głównej a jeśli nie - wyświetla treść błędu w konsoli.
 
-### `npm run eject`
+### Main.tsx
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+plik **Main.tsx** zawiera system karteczek
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### opis
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+const schema = yup.object().shape({
+    description: yup.string().min(1).required("You must add a description")
+});
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+const {register, handleSubmit, formState: {errors}} = useForm<CreateFormData>({
+    resolver: yupResolver(schema),
+})
+```
 
-## Learn More
+Zawiera walidację dodawanej karteczki. w zmiennej ```const schema``` znajduje się reguła sprawdzania karteczki. Metoda ```.required()``` nie jest zaimplementowana do dalszego użytku.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Nav.tsx
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+plik ***Nav.tsx*** zawiera nawigację.
+
+### Task.tsx
+
+plik ***Task.tsx*** zawiera strukturę karteczek.
+
+```
+export type ITask = {
+    id: string
+    description: string
+    completed: boolean
+}
+```
+
+Jest **Interface'em** odzwierciedlającym strukturę karteczki w bazie danych.
+
+```
+type TaskComponent = {
+    delete: () => void
+    complete: () => void
+} & ITask
+```
+
+Jest **Typem**(szkieletem) każdej karteczki. Dziedziczy po ***ITask***.
+
+## Konfiguracja
+
+### firebase.ts
+
+Plik **firebase.ts** zawiera wszystkie dane o połączeniu z bazą danych.
+
+```
+const firebaseConfig = {
+    ...
+}
+```
+
+Jest obiektem wygenerowanym przez [Firebase](https://firebase.google.com). Zawiera dane o m.in.:
+- kluczu
+- adresie domeny
+- ID projektu
+
+```
+const app = initializeApp(firebaseConfig);
+```
+
+Inicjalizacja połączenia z bazą danych.
+
+```
+export const auth = getAuth(app);
+```
+
+Pobranie danych o użytkowniku.
+
+```
+export const provider = new GoogleAuthProvider();
+```
+
+Pozwala na logowanie się do aplikacji kontem Google.
+
+```
+export const db = getFirestore(app);
+```
+
+Pobranie bazy danych z bazy danych.
+
+## hooki
+
+### useTasks.tsx
+
+Plik **useTasks.tsx** zawiera wszystkie potrzebne metody i dane do zarządzania karteczkami.
+
+```
+export interface CreateFormData {
+    description: string
+}
+```
+
+Interface przechowujący dane wpisywane od użytkownika do karteczki.
+
+```
+const [user] = useAuthState(auth);
+```
+
+Dane o użytkowniku pobierane przy każdym odświeżeniu strony. Umożliwia to odświeżanie karteczek w ```useEffect```'ie.
+
+```
+const tasksRef = collection(db, "todos");
+```
+
+Dane o kolekcji _todos_ w bazie danych Firestore.
+
+```
+const addTask = async (data: CreateFormData) => {
+    ...
+}
+```
+
+Funkcja do dodawania karteczek i resetowania formularza do wpisywania. Odświeża karteczki wywołując funkcję **getTasks()**.
+
+```
+const getTasks = async () => {
+    ...
+}
+```
+
+Funkcja do odświeżania karteczek. Pobiera dane z bazy danych.
+
+```
+const removeTask {
+    ...
+}
+```
+
+Funkcja do usuwania karteczek. Odświeża karteczki wywołując funkcję **getTasks()**.
+
+```
+const completeTask {
+    ...
+}
+```
+
+Funkcja do kompletowania karteczek. Odświeża karteczki wywołując funkcję **getTasks()**.
+
+## CSS
+
+```
+body .shadow {
+  --radius: 1000px;
+  position: absolute;
+  top: 10%;
+  left: -20%;
+  width: var(--radius);
+  height: var(--radius);
+  background: radial-gradient(circle, var(--accent-border) 0%, rgba(255,0,111,0) 70%);
+  pointer-events: none;
+}
+```
+
+Jest cieniem na tle aplikacji.
+
+```
+.button {
+    ...
+}
+```
+
+posiada **sześć** stany:
+- .button (tło w akcentowym kolorze)
+- .none (transparentne tło)
+- .outline (transparentne tło + obramowanie w akcentowym kolorze)
+- .square (transparentne tło + obramowanie w akcentowym kolorze + identyczny padding)
+- .remove (transparentne tło + obramowanie w czerwonym kolorze)
+- .complete (transparentne tło + obramowanie w zielonym kolorze)

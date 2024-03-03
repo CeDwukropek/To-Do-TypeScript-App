@@ -8,6 +8,7 @@
   --accent: #e93886;
   --accent-border: rgba(233, 56, 134, .3);
 }
+
 html {
   overflow: hidden;
 }
@@ -18,7 +19,6 @@ body {
   font-optical-sizing: auto;
   margin: 0 auto;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
   color: var(--text);
   position: relative;
   overflow: hidden;

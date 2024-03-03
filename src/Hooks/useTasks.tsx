@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { ITask } from "../Components/Task";
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
-import { db } from "../Config/firebase";
-import { getAuth } from "firebase/auth";
+import { auth, db } from "../Config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export interface CreateFormData {
@@ -10,7 +9,6 @@ export interface CreateFormData {
 }
 
 export const useTasks = () => {
-    const auth = getAuth()
     const [user] = useAuthState(auth);
     const [tasksList, setTasksList] = useState<ITask[] | null>(null)
     const tasksRef = collection(db, "todos");

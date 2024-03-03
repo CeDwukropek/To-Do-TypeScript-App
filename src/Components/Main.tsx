@@ -31,9 +31,11 @@ export const Main = () => {
     navigate('/')
   }
 
+  console.log(user?.uid)
+
   useEffect(() => {
       getTasks()
-  }, [])
+  }, [getTasks])
 
 
   return(

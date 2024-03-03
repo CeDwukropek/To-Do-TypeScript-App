@@ -153,7 +153,15 @@ Dane o kolekcji _todos_ w bazie danych Firestore.
 
 ```
 const addTask = async (data: CreateFormData) => {
-    ...
+    await addDoc(tasksRef, {
+        ...data,
+        completed: false,
+        userId: user?.uid,
+    })
+  
+    let form = document.getElementsByTagName("form")[0]
+    form.reset()
+    getTasks()
 }
 ```
 
@@ -161,24 +169,35 @@ Funkcja do dodawania karteczek i resetowania formularza do wpisywania. Odśwież
 
 ```
 const getTasks = async () => {
-    ...
+    if(user) {
+        const q = query(tasksRef, where("userId", "==", user.uid))
+        const data = await getDocs(q)
+        setTasksList(
+        data.docs.map((doc) => ({...doc.data(), id: doc.id})) as ITask[])
+    }
+    //console.log("refreshed data")
 }
 ```
 
 Funkcja do odświeżania karteczek. Pobiera dane z bazy danych.
 
 ```
-const removeTask {
-    ...
+const removeTask = async (item: ITask) => {
+    await deleteDoc(doc(db, "todos", item.id));
+    getTasks()
 }
 ```
 
 Funkcja do usuwania karteczek. Odświeża karteczki wywołując funkcję **getTasks()**.
 
 ```
-const completeTask {
-    ...
+const completeTask = async (item: ITask) => {
+    await updateDoc(doc(db, "todos", item.id),{
+        completed: !item.completed
+    })
+    getTasks()
 }
+
 ```
 
 Funkcja do kompletowania karteczek. Odświeża karteczki wywołując funkcję **getTasks()**.
@@ -202,7 +221,16 @@ Jest cieniem na tle aplikacji.
 
 ```
 .button {
-    ...
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem 1rem;
+  border-radius: 8px;
+  background-color: var(--accent);
+  border: 0;
+  color: var(--text);
+  cursor: pointer;
+  transition: 250ms;
 }
 ```
 

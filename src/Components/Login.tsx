@@ -1,5 +1,5 @@
 import {auth, provider} from "../Config/firebase";
-import { getAuth, signInWithPopup } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import React, { useEffect } from "react";
 import {useNavigate} from "react-router-dom";
@@ -11,10 +11,10 @@ export const Login = () => {
 
   useEffect(() => {
     if(user) {
-      console.log("logged")
+      //console.log("logged")
       navigate('/Main')
     }
-  }, [user])
+  }, [user, navigate])
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)

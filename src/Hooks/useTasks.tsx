@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Task } from "../Components/Task";
+import { ITask } from "../Components/Task";
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
 import { db } from "../Config/firebase";
 import { getAuth } from "firebase/auth";
@@ -12,7 +12,7 @@ export interface CreateFormData {
 export const useTasks = () => {
     const auth = getAuth()
     const [user] = useAuthState(auth);
-    const [tasksList, setTasksList] = useState<Task[] | null>(null)
+    const [tasksList, setTasksList] = useState<ITask[] | null>(null)
     const tasksRef = collection(db, "todos");
   
     const addTask = async (data: CreateFormData) => {
@@ -31,19 +31,19 @@ export const useTasks = () => {
         if(user) {
             const q = query(tasksRef, where("userId", "==", user.uid))
             const data = await getDocs(q)
-            console.log(data)
             setTasksList(
-            data.docs.map((doc) => ({...doc.data(), id: doc.id})) as Task[]
+            data.docs.map((doc) => ({...doc.data(), id: doc.id})) as ITask[]
             )
         }
+        //console.log("refreshed data")
     }
   
-    const removeTask = async (item: Task) => {
+    const removeTask = async (item: ITask) => {
       await deleteDoc(doc(db, "todos", item.id));
       getTasks()
     }
   
-    const completeTask = async (item: Task) => {
+    const completeTask = async (item: ITask) => {
       await updateDoc(doc(db, "todos", item.id),{
           completed: !item.completed
         })

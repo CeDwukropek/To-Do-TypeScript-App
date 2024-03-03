@@ -24,15 +24,13 @@ export const Main = () => {
   const {tasksList, addTask, removeTask, completeTask, getTasks} = useTasks()
 
   if(!user) {
-    console.log("not logged")
+    //console.log("not logged")
     navigate('/')
   }
 
-  console.log(user?.uid)
-
   useEffect(() => {
       getTasks()
-  }, [])
+  }, [getTasks, user])
 
 
   return(

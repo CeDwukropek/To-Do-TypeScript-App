@@ -2,7 +2,7 @@ import Cross from '../images/cross-small.svg';
 import Check from '../images/check.svg';
 import React from 'react';
 
-export type Task = {
+export type ITask = {
     id: string
     description: string
     completed: boolean
@@ -11,7 +11,7 @@ export type Task = {
 type TaskComponent = {
     delete: () => void
     complete: () => void
-} & Task
+} & ITask
 
 export const Task = (props: TaskComponent) => {
     return(

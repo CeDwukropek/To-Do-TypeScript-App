@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Task } from "../Components/Task";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { db } from "../Config/firebase";
 import * as yup from "yup";
@@ -30,10 +30,13 @@ export const useTasks = () => {
     }
     
     const getTasks = async () => {
-        const data = await getDocs(tasksRef)
-        setTasksList(
+        if(user) {
+            const q = query(tasksRef, where("userId", "==", user.uid))
+            const data = await getDocs(tasksRef)
+            setTasksList(
             data.docs.map((doc) => ({...doc.data(), id: doc.id})) as Task[]
-        )
+            )
+        }
     }
   
     const removeTask = async (item: Task) => {

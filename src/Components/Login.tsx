@@ -19,6 +19,11 @@ export const Login = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
     .then(() => navigate('/Main'))
+    .catch((error) => {
+      const errorMessage = error.message;
+
+      console.log(errorMessage)
+    });
   }
 
   return(

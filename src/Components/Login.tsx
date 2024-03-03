@@ -1,14 +1,12 @@
 import {auth, provider} from "../Config/firebase";
 import { getAuth, signInWithPopup } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {useNavigate} from "react-router-dom";
-import { IconContext } from "react-icons";
 import Google from "../images/google.svg"
 
 export const Login = () => {
   const navigate = useNavigate()
-  const authenticator = getAuth()
   const [user] = useAuthState(auth);
 
   useEffect(() => {
@@ -18,9 +16,9 @@ export const Login = () => {
     }
   }, [user])
 
-  const signInWithGoogle = async () => {
-    await signInWithPopup(auth, provider)
-    navigate('/Main')
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+    .then(() => navigate('/Main'))
   }
 
   return(

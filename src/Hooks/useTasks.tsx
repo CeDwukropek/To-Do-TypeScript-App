@@ -32,7 +32,7 @@ export const useTasks = () => {
     const getTasks = async () => {
         if(user) {
             const q = query(tasksRef, where("userId", "==", user.uid))
-            const data = await getDocs(tasksRef)
+            const data = await getDocs(q)
             setTasksList(
             data.docs.map((doc) => ({...doc.data(), id: doc.id})) as Task[]
             )

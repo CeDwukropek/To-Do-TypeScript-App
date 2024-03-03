@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { CreateFormData, useTasks } from "../Hooks/useTasks";
 import { Task } from "./Task";
-import {v4 as uuid} from 'uuid'
 import {useNavigate} from "react-router-dom";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from "firebase/auth";
 import { Navbar } from '../Components/Nav';
-import { CollectionReference, DocumentData, addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
-import { db } from "../Config/firebase";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
@@ -31,9 +28,11 @@ export const Main = () => {
     navigate('/')
   }
 
+  console.log(user?.uid)
+
   useEffect(() => {
       getTasks()
-  }, [tasksList])
+  }, [])
 
 
   return(

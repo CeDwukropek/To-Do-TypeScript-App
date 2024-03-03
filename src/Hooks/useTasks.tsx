@@ -1,10 +1,7 @@
 import { useState } from "react"
 import { Task } from "../Components/Task";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
-import { useForm } from "react-hook-form";
 import { db } from "../Config/firebase";
-import * as yup from "yup";
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -27,6 +24,7 @@ export const useTasks = () => {
   
         let form = document.getElementsByTagName("form")[0]
         form.reset()
+        getTasks()
     }
     
     const getTasks = async () => {
@@ -42,12 +40,14 @@ export const useTasks = () => {
   
     const removeTask = async (item: Task) => {
       await deleteDoc(doc(db, "todos", item.id));
+      getTasks()
     }
   
     const completeTask = async (item: Task) => {
       await updateDoc(doc(db, "todos", item.id),{
           completed: !item.completed
         })
+        getTasks()
     }
 
 

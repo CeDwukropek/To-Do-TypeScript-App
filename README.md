@@ -241,3 +241,11 @@ posiada **sześć** stany:
 - .square (transparentne tło + obramowanie w akcentowym kolorze + identyczny padding)
 - .remove (transparentne tło + obramowanie w czerwonym kolorze)
 - .complete (transparentne tło + obramowanie w zielonym kolorze)
+
+## To-Do
+Pewne rzeczy powinny być jeszcze dodane, jednak nie było czasu na ich dodanie. Nie są one niezbędne dla działania strony ale zdecydowanie poprawią UX.
+- [ ] Loading screen on fetching data
+- [ ] Automatic refresh on change in DB
+- [ ] Promised request (e.g. add task imediatly without waiting for DB response)
+- [ ] Themes created by user
+- [ ] Settings (font, size, etc.)

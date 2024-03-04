@@ -33,7 +33,7 @@ export const useTasks = () => {
             data.docs.map((doc) => ({...doc.data(), id: doc.id})) as ITask[]
             )
         }
-        //console.log("refreshed data")
+        console.log("refreshed data")
     }
   
     const removeTask = async (item: ITask) => {

@@ -1,6 +1,6 @@
 # To-Do-TypeScript-App
 
-Projekt w pełni działającej aplikacji z zadaniami do zrobienia. Dane przechowywane są na [Firebase](https://firebase.google.com) a cała aplikacja hostowana jest na [Vercelu](https://vercel.com). Link do aplikacji: [To-Do-TypeScript-App](https://to-do-app-chi-eosin.vercel.app)
+Projekt w pełni działającej aplikacji z zadaniami do zrobienia. Dane przechowywane są na [Firebase](https://firebase.google.com) a cała aplikacja hostowana jest na [Vercel](https://vercel.com). Link do aplikacji: [To-Do-TypeScript-App](https://to-do-app-chi-eosin.vercel.app)
 
 ## Działanie
 

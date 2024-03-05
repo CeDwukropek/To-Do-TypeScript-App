@@ -28,10 +28,7 @@ export const Main = () => {
     navigate('/')
   }
 
-  useEffect(() => {
-      getTasks()
-  }, [user])
-
+  getTasks()
 
   return(
     <>
@@ -45,6 +42,7 @@ export const Main = () => {
       <div className="tasksContainer">
         {tasksList?.map((item) => (
             <Task
+              key={item.id}
               id={item.id}
               description={item.description}
               completed={item.completed}

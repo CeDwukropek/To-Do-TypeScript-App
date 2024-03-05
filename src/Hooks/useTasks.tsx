@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ITask } from "../Components/Task";
-import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where, onSnapshot, QuerySnapshot } from "firebase/firestore";
 import { auth, db } from "../Config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -9,7 +9,7 @@ export interface CreateFormData {
 }
 
 export const useTasks = () => {
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const [tasksList, setTasksList] = useState<ITask[] | null>(null)
     const tasksRef = collection(db, "todos");
   
@@ -26,14 +26,22 @@ export const useTasks = () => {
     }
     
     const getTasks = async () => {
-        if(user) {
-            const q = query(tasksRef, where("userId", "==", user.uid))
-            const data = await getDocs(q)
-            setTasksList(
-            data.docs.map((doc) => ({...doc.data(), id: doc.id})) as ITask[]
-            )
+        if(loading) {
+            return
         }
-        console.log("refreshed data")
+        const q = query(tasksRef, where("userId", "==", user?.uid))
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            let tasksArr:ITask[] = []
+            querySnapshot.forEach( el => {
+                tasksArr.push({
+                    description: el.data().description,
+                    id: el.data().id,
+                    completed: el.data().completed
+                })
+            })
+            setTasksList(tasksArr)
+        })
+        return () => unsubscribe()
     }
   
     const removeTask = async (item: ITask) => {

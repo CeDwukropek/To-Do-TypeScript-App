@@ -30,7 +30,7 @@ export const Main = () => {
 
   useEffect(() => {
     getTasks()
-  }, [user])
+  })
 
   return(
     <>

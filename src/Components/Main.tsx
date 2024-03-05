@@ -28,6 +28,8 @@ export const Main = () => {
     navigate('/')
   }
 
+  getTasks()
+
   return(
     <>
     <Navbar/> 
@@ -40,6 +42,7 @@ export const Main = () => {
       <div className="tasksContainer">
         {tasksList?.map((item) => (
             <Task
+              key={item.id}
               id={item.id}
               description={item.description}
               completed={item.completed}

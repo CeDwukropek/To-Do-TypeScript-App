@@ -33,9 +33,10 @@ export const useTasks = () => {
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             let tasksArr:ITask[] = []
             querySnapshot.forEach( el => {
+                console.log(el)
                 tasksArr.push({
                     description: el.data().description,
-                    id: el.data().id,
+                    id: el.id,
                     completed: el.data().completed
                 })
             })

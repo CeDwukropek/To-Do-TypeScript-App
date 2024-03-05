@@ -28,11 +28,6 @@ export const Main = () => {
     navigate('/')
   }
 
-  useEffect(() => {
-      getTasks()
-  }, [user])
-
-
   return(
     <>
     <Navbar/> 

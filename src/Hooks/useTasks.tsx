@@ -22,7 +22,6 @@ export const useTasks = () => {
   
         let form = document.getElementsByTagName("form")[0]
         form.reset()
-        getTasks()
     }
     
     const getTasks = async () => {
@@ -47,14 +46,12 @@ export const useTasks = () => {
   
     const removeTask = async (item: ITask) => {
       await deleteDoc(doc(db, "todos", item.id));
-      getTasks()
     }
   
     const completeTask = async (item: ITask) => {
       await updateDoc(doc(db, "todos", item.id),{
           completed: !item.completed
         })
-        getTasks()
     }
 
 
